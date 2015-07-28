@@ -14,5 +14,9 @@
         "psr-4": {
             "\\maxlen\\parser\\": ""
         }
-    }
+    },
+    "require": {
+		"electrolinux/phpquery": "dev-master",
+		"maxlen/proxy": "dev-master"
+	}
 }
