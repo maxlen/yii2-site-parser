@@ -1,4 +1,4 @@
-pdffiller_proxy
+Yii2 site parser
 ===============
 
 Site parser Yii2 extension
