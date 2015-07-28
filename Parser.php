@@ -1,12 +1,10 @@
 <?php
 
-namespace maxlen\proxy;
+namespace maxlen\parser;
 
-use yii\console\Exception;
-
-class ProxyCron extends \yii\base\Module
+class Parser extends \yii\base\Module
 {
-    public $controllerNamespace = 'maxlen\proxy\controllers';
+    public $controllerNamespace = 'maxlen\parser\controllers';
 
     public $reportSettings = [];
 

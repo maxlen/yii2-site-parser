@@ -9,7 +9,7 @@ use maxlen\proxy\models\Proxies;
 use maxlen\proxy\helpers\Proxy;
 use frontend\modules\auth\models\User;
 
-class ProxyCronController extends Controller
+class ParserController extends Controller
 {
     private $_badProxies = [];
     private $_countBadProxies = 0;
