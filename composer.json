@@ -18,5 +18,11 @@
     "require": {
 		"electrolinux/phpquery": "dev-master",
 		"maxlen/proxy": "dev-master"
-	}
+	},
+	"repositories":[
+	{
+            "type":"git",
+            "url":"https://github.com/maxlen/pdffiller_proxy"
+        }
+        ]
 }
