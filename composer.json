@@ -15,8 +15,4 @@
             "\\maxlen\\parser\\": ""
         }
     },
-    "require": {
-        "electrolinux/phpquery": "dev-master",
-        "maxlen/yii2-proxy": "dev-master"
-    }
 }
