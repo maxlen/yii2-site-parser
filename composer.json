@@ -1,0 +1,21 @@
+{
+	"name": "maxlen/yii2-site-parser",
+	"description": "Yii2 site parser",
+	"type": "yii2-extension",
+	"keywords": ["yii2","extension"],
+	"license": "BSD-4-Clause",
+	"authors": [
+		{
+			"name": "Maxim",
+			"email": "maxlen@inbox.ru"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"\\maxlen\\parser\\": ""
+		}
+	},
+        "require": {
+		"electrolinux/phpquery": "dev-master"
+	}
+}
