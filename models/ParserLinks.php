@@ -36,6 +36,7 @@ class ParserLinks extends \yii\db\ActiveRecord
     {
         return [
             [['link'], 'required'],
+            ['link', 'unique'],
             [['status'], 'integer'],
             [['link'], 'string', 'max' => 255],
         ];

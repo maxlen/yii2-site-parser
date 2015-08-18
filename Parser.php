@@ -2,6 +2,8 @@
 
 namespace maxlen\parser;
 
+use yii\console\Exception;
+
 class Parser extends \yii\base\Module
 {
     public $controllerNamespace = 'maxlen\parser\controllers';

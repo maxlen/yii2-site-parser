@@ -1,13 +1,24 @@
 <?php
-
 namespace maxlen\parser\controllers;
 
 use yii\console\Controller;
 use yii\db\Exception;
 
+use maxlen\parser\helpers\Parser;
+use maxlen\parser\models\ParserLinks;
+
 class ParserController extends Controller
 {
-   public function actionTest() {
-       echo 'OK';
+   public function actionGrabLinks($domain, $linkId) {
+       $params = Parser::getParams();
+       $params['domain'] = $domain;
+           
+       $link = ParserLinks::find()->where(['id' => $linkId])->limit(1)->one();
+       
+//       echo ' -------- GRABBIG: '. $link->link . ' ----------- ';
+       
+       Parser::grabLinks($link, $params);
+
+//       echo ' OK';
    }
 }
