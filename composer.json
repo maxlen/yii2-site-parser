@@ -17,7 +17,7 @@
     },
     "require": {
 		"electrolinux/phpquery": "dev-master",
-		"maxlen/proxy": "dev-master"
+		"maxlen/proxy": "master"
 	},
 	"repositories":[
 	    {
