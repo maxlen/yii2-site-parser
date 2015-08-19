@@ -143,7 +143,8 @@ class Parser
                 if ($approved) {
                     if (isset($params['exts']) && self::isHtml($href, $params['exts'], true)) {
                         // save to spider_forms
-                        echo ' ---- FIND FILE: '.$href.' ---- ';
+//                        echo ' ---- FIND FILE: '.$href.' ---- ';
+                        \common\modules\spider\models\SpiderFormsTest::createForm(-1, -1, $href, '', '', 0);
                     } elseif (self::isHtml($href)) {
                         $newLink = new ParserLinks;
                         $newLink->link = $href;
@@ -396,7 +397,7 @@ class Parser
         return [
             'exceptions' => ['mailto:', '#'],
             'parseSubdomains' => true,
-            'exts' => ['pdf']
+            'exts' => ['jpg']
         ];
     }
 }
