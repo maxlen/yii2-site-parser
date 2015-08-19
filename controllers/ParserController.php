@@ -9,7 +9,7 @@ use maxlen\proxy\helpers\Proxy;
 class ParserController extends Controller
 {
 
-    public function actionGrabLinks($domain, $linkId)
+    public function actionGrabLinks($domain, $linkId, $startNewProcess = 0)
     {
         $params = Parser::getParams();
         $params['domain'] = $domain;
@@ -20,14 +20,16 @@ class ParserController extends Controller
 
         Parser::grabLinks($link, $params);
 
-        $link = ParserLinks::find()->where(['status' => Parser::TYPE_NOT_PARSED])->limit(1)->one();
+        if($startNewProcess != 0) {
+            $link = ParserLinks::find()->where(['status' => Parser::TYPE_NOT_PARSED])->limit(1)->one();
 
-        if (!is_null($link)) {
-            $link->status = Parser::TYPE_PROCESS;
-            $link->save();
+            if (!is_null($link)) {
+                $link->status = Parser::TYPE_PROCESS;
+                $link->save();
 
-            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} > /dev/null &";
-            exec($command);
+                $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} 1 > /dev/null &";
+                exec($command);
+            }
         }
     }
 }

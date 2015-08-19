@@ -47,9 +47,9 @@ class Parser
             $link->status = self::TYPE_PROCESS;
             $link->save();
             
-            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id}";
+            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} ";
             if($i > 20) {
-                $command .= " > /dev/null &";
+                $command .= "1 > /dev/null &";
                 $processCount++;
             }
             
