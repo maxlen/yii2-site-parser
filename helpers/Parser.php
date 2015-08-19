@@ -52,13 +52,14 @@ class Parser
                 $command .= " > /dev/null &";
                 $processCount++;
             }
-            exec($command);
-            
-            if($processCount == self::FLOWS_COUNT) {
-                break;
-            }
             
             $i++;
+            
+            exec($command);
+            
+            if($processCount >= self::FLOWS_COUNT) {
+                break;
+            }
         }
         
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
