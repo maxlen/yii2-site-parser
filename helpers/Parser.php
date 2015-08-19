@@ -34,6 +34,8 @@ class Parser
         if($newLink->save()) {
             self::parseByLink($params);
         }
+        
+        return;
     }
     
     public static function parseByLink($params)
@@ -54,6 +56,8 @@ class Parser
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
         
         mail('maxim.gavrilenko@pdffiller.com', 'site parser is finished', 'Te site parser for ' . $params['domain'] . ' is finished');
+        
+        return;
     }
     
     public static function grabLinks($site, $params) {

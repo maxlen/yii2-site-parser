@@ -12,13 +12,9 @@ class ParserController extends Controller
    public function actionGrabLinks($domain, $linkId) {
        $params = Parser::getParams();
        $params['domain'] = $domain;
-           
-       $link = ParserLinks::find()->where(['id' => $linkId])->limit(1)->one();
-       
-//       echo ' -------- GRABBIG: '. $link->link . ' ----------- ';
-       
-       Parser::grabLinks($link, $params);
 
-//       echo ' OK';
+       $link = ParserLinks::find()->where(['id' => $linkId])->limit(1)->one();
+
+       Parser::grabLinks($link, $params);
    }
 }
