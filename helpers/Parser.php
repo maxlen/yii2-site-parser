@@ -45,7 +45,7 @@ class Parser
             
             $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id}";
             if($i > 20) {
-                $command .= "> /dev/null &";
+                $command .= " > /dev/null &";
             }
             
             $i++;
