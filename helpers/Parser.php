@@ -13,6 +13,8 @@ class Parser
     const TYPE_PROCESS = 1;
     const TYPE_PARSED = 2;
     const TYPE_DESIRED = 3;
+    
+    const FLOWS_COUNT = 10;
 
     /**
      * Grabbing files from domain and save to DB
@@ -40,7 +42,7 @@ class Parser
     
     public static function parseByLink($params)
     {
-        $i = 1;
+        $i = $processCount = 1;
         while ($link = ParserLinks::find()->where(['status' => self::TYPE_NOT_PARSED])->limit(1)->one()) {
             $link->status = self::TYPE_PROCESS;
             $link->save();
@@ -48,8 +50,14 @@ class Parser
             $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id}";
             if($i > 20) {
                 $command .= " > /dev/null &";
+                $processCount++;
             }
             exec($command);
+            
+            if($processCount == self::FLOWS_COUNT) {
+                break;
+            }
+            
             $i++;
         }
         
