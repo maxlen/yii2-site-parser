@@ -26,7 +26,7 @@ class ParserController extends Controller
             $link->status = Parser::TYPE_PROCESS;
             $link->save();
 
-            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} > /dev/null &";
+            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id}";
             exec($command);
         }
     }
