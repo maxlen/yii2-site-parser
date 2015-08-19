@@ -47,12 +47,8 @@ class Parser
             if($i > 20) {
                 $command .= " > /dev/null &";
             }
-            
+            exec($command);
             $i++;
-//            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} > /dev/null &";
-            echo $command;
-            echo exec($command);
-//            exec($command);
         }
         
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
