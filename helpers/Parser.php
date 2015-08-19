@@ -44,7 +44,7 @@ class Parser
             $link->save();
             
             $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id}";
-            if($i > 20) {
+            if($i > 10) {
                 $command .= " > /dev/null &";
             }
             exec($command);
@@ -52,6 +52,8 @@ class Parser
         }
         
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
+        
+        mail('maxim.gavrilenko@pdffiller.com', 'site parser is finished', 'Te site parser for ' . $params['domain'] . ' is finished');
     }
     
     public static function grabLinks($site, $params) {
