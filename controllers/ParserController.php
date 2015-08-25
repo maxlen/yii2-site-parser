@@ -16,8 +16,7 @@ class ParserController extends Controller
         
         $domain = ParserDomains::find()->where(['id' => $domainId])->limit(1)->one();
         
-        if(is_null($domain))
-        {
+        if(is_null($domain)) {
             echo PHP_EOL. " THERE IS NO DOMAIN id = {$domainId} IN DB". PHP_EOL;
             return;
         }
@@ -30,12 +29,10 @@ class ParserController extends Controller
 
         Parser::grabLinks($link, $params);
 
-        if($startNewProcess != 0)
-        {
+        if($startNewProcess != 0) {
             $link = ParserLinks::find()->where(['status' => Parser::TYPE_NOT_PARSED])->limit(1)->one();
 
-            if (!is_null($link))
-            {
+            if (!is_null($link)) {
                 $link->status = Parser::TYPE_PROCESS;
                 $link->save();
 

@@ -120,7 +120,7 @@ class Parser
                 $hrefDomain = self::getDomain($href);
 
                 if (!is_null($hrefDomain)) {
-                    $isSource = strpos(self::cleanDomain($hrefDomain), self::cleanDomain($domain>domain));
+                    $isSource = strpos(self::cleanDomain($hrefDomain), self::cleanDomain($domain->domain));
                     if($isSource !== false) {
                         if(!$params['parseSubdomains'] && $isSource != 0) {
                             continue;
