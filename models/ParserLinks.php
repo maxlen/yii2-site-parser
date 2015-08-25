@@ -62,4 +62,8 @@ class ParserLinks extends \yii\db\ActiveRecord
     {
         return $this->hasOne(ParserDomains::className(), ['id' => 'domain_id']);
     }
+    
+    public static function clearTable() {
+        self::getDb()->createCommand()->truncateTable(self::tableName(true))->execute();
+    }
 }

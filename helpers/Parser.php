@@ -69,6 +69,7 @@ class Parser
         }
         
         ParserDomains::setAsFinished($params['domainId']);
+        ParserLinks::clearTable();
         
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
         
