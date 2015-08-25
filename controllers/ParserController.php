@@ -27,6 +27,10 @@ class ParserController extends Controller
 
         $link = ParserLinks::find()->where(['id' => $linkId])->limit(1)->one();
 
+        if(is_null($link)) {
+            return;
+        }
+        
         Parser::grabLinks($link, $params);
 
         if($startNewProcess != 0) {
