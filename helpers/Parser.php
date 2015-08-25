@@ -69,7 +69,7 @@ class Parser
         }
         
         ParserDomains::setAsFinished($params['domainId']);
-        ParserLinks::clearTable();
+//        ParserLinks::clearTable();
         
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
         
@@ -412,7 +412,7 @@ class Parser
         return [
             'exceptions' => ['mailto:', '#'],
             'parseSubdomains' => true,
-            'exts' => ['jpg']
+            'exts' => ['pdf']
         ];
     }
 }
