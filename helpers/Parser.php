@@ -412,7 +412,7 @@ class Parser
         return [
             'exceptions' => ['mailto:', '#'],
             'parseSubdomains' => true,
-            'exts' => ['jpg']
+            'exts' => ['pdf']
         ];
     }
 }
