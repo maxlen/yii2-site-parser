@@ -5,7 +5,9 @@ use Yii;
 use maxlen\proxy\helpers\Proxy;
 use yii\data\ActiveDataProvider;
 use common\helpers\ProxyHelpers;
+use maxlen\parser\models\ParserDomains;
 use maxlen\parser\models\ParserLinks;
+use maxlen\parser\models\ParserForms;
 
 class Parser
 {
@@ -30,8 +32,12 @@ class Parser
         $params['domain'] = $site;
         $site = "http://" . $site;
         
+        $newDomain = ParserDomains::createDomain($site);
+        $params['domainId'] = $newDomain->id;
+        
         $newLink = new ParserLinks;
         $newLink->link = $site;
+        $newLink->domain_id = $params['domainId'];
         
         if($newLink->save()) {
             self::parseByLink($params);
@@ -47,7 +53,7 @@ class Parser
             $link->status = self::TYPE_PROCESS;
             $link->save();
             
-            $command = "php yii parser/parser/grab-links {$params['domain']} {$link->id} ";
+            $command = "php yii parser/parser/grab-links {$params['domainId']} {$link->id} ";
             if($i > 20) {
                 $command .= "1 > /dev/null &";
                 $processCount++;
@@ -62,6 +68,8 @@ class Parser
             }
         }
         
+        ParserDomains::setAsFinished($params['domainId']);
+        
         echo PHP_EOL. " ALL DONE ". PHP_EOL;
         
         mail('maxim.gavrilenko@pdffiller.com', 'site parser is finished', 'Te site parser for ' . $params['domain'] . ' is finished');
@@ -69,7 +77,9 @@ class Parser
         return;
     }
     
-    public static function grabLinks($site, $params) {
+    public static function grabLinks($site, $params)
+    { 
+        $domain = $params['domain'];
         
         $result = ProxyHelpers::getHtmlByUrl($site->link, ['getInfo' => true, 'content_type' => ['html']]);
             
@@ -110,7 +120,7 @@ class Parser
                 $hrefDomain = self::getDomain($href);
 
                 if (!is_null($hrefDomain)) {
-                    $isSource = strpos(self::cleanDomain($hrefDomain), self::cleanDomain($params['domain']));
+                    $isSource = strpos(self::cleanDomain($hrefDomain), self::cleanDomain($domain>domain));
                     if($isSource !== false) {
                         if(!$params['parseSubdomains'] && $isSource != 0) {
                             continue;
@@ -145,9 +155,10 @@ class Parser
                     if (isset($params['exts']) && self::isHtml($href, $params['exts'], true)) {
                         // save to spider_forms
 //                        echo ' ---- FIND FILE: '.$href.' ---- ';
-                        \common\modules\spider\models\SpiderFormsTest::createForm(-1, -1, $href, '', '', 0);
+                        ParserForms::createForm($domain->id, $href);
                     } elseif (self::isHtml($href)) {
                         $newLink = new ParserLinks;
+                        $newLink->domain_id = $domain->id;
                         $newLink->link = $href;
                         $newLink->save();
                     }
@@ -348,11 +359,13 @@ class Parser
 
     public static function cleanDomain($url, $saveWww = false)
     {
-        if (strpos($url, 'http://') == 0)
+        if (strpos($url, 'http://') == 0) {
             $url = str_replace('http://', '', $url);
+        }
 
-        if (!$saveWww && strpos($url, 'www.') == 0)
+        if (!$saveWww && strpos($url, 'www.') == 0) {
             $url = str_replace('www.', '', $url);
+        }
 
         return $url;
     }
