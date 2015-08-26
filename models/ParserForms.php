@@ -39,6 +39,7 @@ class ParserForms extends \yii\db\ActiveRecord
     {
         return [
             [['domain_id', 'link'], 'required'],
+            ['link', 'unique'],
             [['domain_id', 'form_id', 'processed'], 'integer'],
             [['create_date'], 'safe'],
             [['link'], 'string', 'max' => 255],

@@ -51,7 +51,7 @@ class Parser
         $i = $processCount = 1;
         while ($link = ParserLinks::find()->where(['status' => self::TYPE_NOT_PARSED])->limit(1)->one()) {
             $link = ParserLinks::setAsBeginAndGet($i);
-
+        
             $command = "php yii parser/parser/grab-links {$params['domainId']} {$link->id} ";
             if($i > 20) {
                 $command .= "1 > /dev/null &";
