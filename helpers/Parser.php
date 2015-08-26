@@ -62,7 +62,7 @@ class Parser
             
             exec($command);
             
-            if($processCount >= self::FLOWS_COUNT) {
+            if($processCount > self::FLOWS_COUNT) {
                 break;
             }
         }
