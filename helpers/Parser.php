@@ -154,7 +154,6 @@ class Parser
                 if ($approved) {
                     if (isset($params['exts']) && self::isHtml($href, $params['exts'], true)) {
                         // save to spider_forms
-//                        echo ' ---- FIND FILE: '.$href.' ---- ';
                         ParserForms::createForm($domain->id, $href);
                     } elseif (self::isHtml($href)) {
                         $newLink = new ParserLinks;
