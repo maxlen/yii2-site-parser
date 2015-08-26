@@ -40,6 +40,8 @@ class ParserController extends Controller
             if (!is_null($link)) {
                 $command = "php yii parser/parser/grab-links {$domain->id} {$link->id} 1 > /dev/null &";
                 exec($command);
+            } else {
+                ParserDomains::setAsFinished($domain->id);
             }
         }
     }
