@@ -50,9 +50,8 @@ class Parser
     {
         $i = $processCount = 1;
         while ($link = ParserLinks::find()->where(['status' => self::TYPE_NOT_PARSED])->limit(1)->one()) {
-            $link->status = self::TYPE_PROCESS;
-            $link->save();
-            
+            $link = ParserLinks::setAsBeginAndGet($i);
+
             $command = "php yii parser/parser/grab-links {$params['domainId']} {$link->id} ";
             if($i > 20) {
                 $command .= "1 > /dev/null &";
@@ -412,7 +411,7 @@ class Parser
         return [
             'exceptions' => ['mailto:', '#'],
             'parseSubdomains' => true,
-            'exts' => ['pdf']
+            'exts' => ['jpg']
         ];
     }
 }

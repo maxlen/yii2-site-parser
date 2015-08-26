@@ -31,15 +31,13 @@ class ParserController extends Controller
             return;
         }
         
+        $processId = $link->process_id;
         Parser::grabLinks($link, $params);
 
         if($startNewProcess != 0) {
-            $link = ParserLinks::find()->where(['status' => Parser::TYPE_NOT_PARSED])->limit(1)->one();
+            $link = ParserLinks::setAsBeginAndGet($processId);
 
             if (!is_null($link)) {
-                $link->status = Parser::TYPE_PROCESS;
-                $link->save();
-
                 $command = "php yii parser/parser/grab-links {$domain->id} {$link->id} 1 > /dev/null &";
                 exec($command);
             }

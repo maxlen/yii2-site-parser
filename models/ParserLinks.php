@@ -3,6 +3,7 @@
 namespace maxlen\parser\models;
 
 use Yii;
+use maxlen\parser\helpers\Parser;
 
 /**
  * This is the model class for table "parser_links".
@@ -65,5 +66,16 @@ class ParserLinks extends \yii\db\ActiveRecord
     
     public static function clearTable() {
         self::getDb()->createCommand()->truncateTable(self::tableName(true))->execute();
+    }
+    
+    public static function setAsBeginAndGet($processId)
+    {
+        self::getDb()->createCommand(
+            'UPDATE ' . self::tableName() . ' SET status = ' . Parser::TYPE_PROCESS
+            . ', process_id = ' . $processId
+            . ' WHERE status = ' . Parser::TYPE_NOT_PARSED . ' LIMIT 1'
+        )->execute();
+        
+        return self::find()->where(['status' => Parser::TYPE_PROCESS, 'process_id' => $processId])->limit(1)->one();
     }
 }
