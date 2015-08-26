@@ -92,6 +92,7 @@ class Parser
             $site->link = $result['info']['redirect_url'];
             
             if(!$site->save()) {
+                $site->delete();
                 return;
             }
 
