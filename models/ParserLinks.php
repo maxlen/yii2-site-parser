@@ -78,4 +78,13 @@ class ParserLinks extends \yii\db\ActiveRecord
         
         return self::find()->where(['status' => Parser::TYPE_PROCESS, 'process_id' => $processId])->limit(1)->one();
     }
+    
+    public static function cleanNotFinished()
+    {
+        self::getDb()->createCommand(
+            'UPDATE ' . self::tableName() . ' SET status = ' . Parser::TYPE_NOT_PARSED
+            . ', process_id = NULL '
+            . ' WHERE status = ' . Parser::TYPE_PROCESS
+        )->execute();
+    }
 }

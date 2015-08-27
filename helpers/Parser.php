@@ -32,16 +32,22 @@ class Parser
         $params['domain'] = $site;
         $site = "http://" . $site;
         
-        $newDomain = ParserDomains::createDomain($site);
-        $params['domainId'] = $newDomain->id;
-        
-        $newLink = new ParserLinks;
-        $newLink->link = $site;
-        $newLink->domain_id = $params['domainId'];
-        
-        if($newLink->save()) {
-            self::parseByLink($params);
+        $myDomain = ParserDomains::find()->where(['domain' => $site])->limit(1)->one();
+        if (is_null($myDomain)) {
+            $myDomain = ParserDomains::createDomain($site);
+
+            $newLink = new ParserLinks;
+            $newLink->link = $site;
+            $newLink->domain_id = $myDomain->id;
+            $newLink->save();
+        } else {
+            ParserLinks::cleanNotFinished();
         }
+        
+
+        $params['domainId'] = $myDomain->id;
+        
+        self::parseByLink($params);
         
         return;
     }
