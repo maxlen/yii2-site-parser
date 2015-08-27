@@ -68,23 +68,23 @@ class ParserLinks extends \yii\db\ActiveRecord
         self::getDb()->createCommand()->truncateTable(self::tableName(true))->execute();
     }
     
-    public static function setAsBeginAndGet($processId)
+    public static function setAsBeginAndGet($processId, $domainId)
     {
         self::getDb()->createCommand(
             'UPDATE ' . self::tableName() . ' SET status = ' . Parser::TYPE_PROCESS
             . ', process_id = ' . $processId
-            . ' WHERE status = ' . Parser::TYPE_NOT_PARSED . ' LIMIT 1'
+            . ' WHERE status = ' . Parser::TYPE_NOT_PARSED . ' AND domain_id = ' . $domainId . ' LIMIT 1'
         )->execute();
         
         return self::find()->where(['status' => Parser::TYPE_PROCESS, 'process_id' => $processId])->limit(1)->one();
     }
     
-    public static function cleanNotFinished()
+    public static function cleanNotFinished($domainId)
     {
         self::getDb()->createCommand(
             'UPDATE ' . self::tableName() . ' SET status = ' . Parser::TYPE_NOT_PARSED
             . ', process_id = NULL '
-            . ' WHERE status = ' . Parser::TYPE_PROCESS
+            . ' WHERE status = ' . Parser::TYPE_PROCESS . ' AND domain_id = ' . $domainId
         )->execute();
     }
 }

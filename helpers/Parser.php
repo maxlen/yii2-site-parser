@@ -41,7 +41,7 @@ class Parser
             $newLink->domain_id = $myDomain->id;
             $newLink->save();
         } else {
-            ParserLinks::cleanNotFinished();
+            ParserLinks::cleanNotFinished($myDomain->id);
         }
         
 
@@ -56,7 +56,7 @@ class Parser
     {
         $i = $processCount = 1;
         while ($link = ParserLinks::find()->where(['status' => self::TYPE_NOT_PARSED])->limit(1)->one()) {
-            $link = ParserLinks::setAsBeginAndGet($i);
+            $link = ParserLinks::setAsBeginAndGet($i, $params['domainId']);
         
             $command = "php yii parser/parser/grab-links {$params['domainId']} {$link->id} ";
             if($i > 20) {
