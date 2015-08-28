@@ -383,7 +383,8 @@ class Parser
         if (empty($extensions)) {
             return in_array(
                 $ext,
-                ['jpg', 'jpeg', 'bmp', 'png', 'gif', 'iso', 'avi', 'mov', 'doc', 'docx', 'pdf', 'txt', 'rtf', 'zip', 'xls', 'xml']
+                ['jpg', 'jpeg', 'bmp', 'png', 'gif', 'iso', 'avi', 'mov', 'mp3',
+                'doc', 'docx', 'pdf', 'txt', 'rtf', 'zip', 'xls', 'xml']
                 ) ? false : true;
         } else {
             if ($yes) {
