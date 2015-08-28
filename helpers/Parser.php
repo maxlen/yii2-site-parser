@@ -381,7 +381,10 @@ class Parser
         $ext = pathinfo($url, PATHINFO_EXTENSION);
 
         if (empty($extensions)) {
-            return in_array($ext, ['jpg', 'jpeg', 'bmp', 'png', 'gif', 'iso', 'avi', 'mov', 'doc', 'docx', 'pdf', 'txt', 'rtf']) ? false : true;
+            return in_array(
+                $ext,
+                ['jpg', 'jpeg', 'bmp', 'png', 'gif', 'iso', 'avi', 'mov', 'doc', 'docx', 'pdf', 'txt', 'rtf', 'zip', 'xls', 'xml']
+                ) ? false : true;
         } else {
             if ($yes) {
                 return in_array($ext, $extensions) ? true : false;
